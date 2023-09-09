@@ -1,18 +1,21 @@
 package namecheap
 
 import (
+
 	"bytes"
 	"encoding/xml"
 	"errors"
 	"fmt"
-	"github.com/hashicorp/go-cleanhttp"
-	"github.com/namecheap/go-namecheap-sdk/v2/namecheap/internal/syncretry"
-	"github.com/weppos/publicsuffix-go/publicsuffix"
 	"io"
 	"net/http"
 	"net/url"
 	"regexp"
 	"strconv"
+
+	"github.com/hashicorp/go-cleanhttp"
+	"github.com/namecheap/go-namecheap-sdk/v2/namecheap/internal/syncretry"
+	"github.com/weppos/publicsuffix-go/publicsuffix"
+
 )
 
 const (
@@ -38,6 +41,7 @@ type Client struct {
 
 	Domains    *DomainsService
 	DomainsDNS *DomainsDNSService
+	DomainsNS  *DomainsNSService
 }
 
 type service struct {
@@ -61,6 +65,7 @@ func NewClient(options *ClientOptions) *Client {
 	client.common.client = client
 	client.Domains = (*DomainsService)(&client.common)
 	client.DomainsDNS = (*DomainsDNSService)(&client.common)
+	client.DomainsNS = (*DomainsNSService)(&client.common)
 
 	return client
 }
